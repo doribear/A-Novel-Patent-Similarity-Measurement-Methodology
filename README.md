@@ -2,7 +2,7 @@
 
 Document Similarity Prediction
 
-  * [A Novel patent similarity measurement methodology: Semantic Distance and Technological Distance](주소추가)
+  * [A-Novel-Patent-Similarity-Measurement-Methodology: Semantic Distance and Technological Distance](주소추가)
   
     * `Yongmin Yoo`, `Cheonkam Jeong`, `Sanguk Gim`, `Junwon Lee`, `Deaho Seo`
 
