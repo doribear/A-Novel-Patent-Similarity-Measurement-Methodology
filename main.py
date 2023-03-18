@@ -29,19 +29,6 @@ lstm.load_state_dict(torch.load("comparisons_test/result/lstm/model.pt", "cpu"))
 bilstm.load_state_dict(torch.load("comparisons_test/result/bilstm/model.pt", "cpu"))
 rawcnn.load_state_dict(torch.load("comparisons_test/result/cnn/model.pt", "cpu"))
 
-
-# other glove model
-lstm_wv = Siamese_LSTM_glove_Model().eval()
-bilstm_wv = Siamese_BiLSTM_glove_Model().eval()
-rawcnn_wv = Siamese_CNN_glove_Model().eval()
-
-lstm_wv.load_state_dict(torch.load("comparisons_test/result/lstm_pre_embedding/model.pt", "cpu"))
-bilstm_wv.load_state_dict(torch.load("comparisons_test/result/bilstm_pre_embedding/model.pt", "cpu"))
-rawcnn_wv.load_state_dict(torch.load("comparisons_test/result/cnn_pre_embedding/model.pt", "cpu"))
-
-# glove
-glove = KeyedVectors.load("comparisons_test/glove/glove.kv")
-
 # data prepare
 data = pd.read_excel("data/final_data.xlsx", engine = "openpyxl")
 
@@ -82,28 +69,6 @@ def get_other_similaritiy(model): # model = ["lstm", "bilstm", "cnn"]
     return similarities
 
 
-def glove_tokenize(text):
-    text = word_tokenize(text)
-    text = np.array([glove[token] if token in glove.key_to_index.keys() else np.zeros(200) for token in text])
-    text = torch.from_numpy(text)
-    text = text.float()
-    return text.unsqueeze(0)
-
-def get_other_glove_similaritiy(model): # model = ["lstm", "bilstm", "cnn"]
-    model = model.to("cuda")
-    similarities = []
-    for a_title_abstract, b_title_abstract in tqdm(zip(A_titles_abstracts, B_titles_abstracts), total = len(A_titles_abstracts), desc = "calculating similarity"):
-        a_title_abstract = glove_tokenize(a_title_abstract).to("cuda")
-        b_title_abstract = glove_tokenize(b_title_abstract).to("cuda")
-        similarity = model(a_title_abstract, b_title_abstract).item()
-        torch.cuda.empty_cache()
-        similarities.append(similarity)
-    return similarities
-
-data['lstm_similarity_glove'] = get_other_glove_similaritiy(lstm_wv)
-data['bilstm_similarity_glove'] = get_other_glove_similaritiy(bilstm_wv)
-data['cnn_similarity_glove'] = get_other_glove_similaritiy(rawcnn_wv)
-
 data['proposed'] = get_sbert_similarity(A_codes, B_codes, A_titles_abstracts, B_titles_abstracts, "proposed")
 data['Bert'] = get_sbert_similarity(A_codes, B_codes, A_titles_abstracts, B_titles_abstracts, "SD")
 
@@ -111,7 +76,7 @@ data['lstm_similarity'] = get_other_similaritiy(lstm)
 data['bilstm_similarity'] = get_other_similaritiy(bilstm)
 data['cnn_similarity'] = get_other_similaritiy(rawcnn)
 
-comparisons = ['proposed', 'Bert', 'lstm_similarity', 'bilstm_similarity', 'cnn_similarity', 'lstm_similarity_glove', 'bilstm_similarity_glove', 'cnn_similarity_glove']
+comparisons = ['proposed', 'Bert', 'lstm_similarity', 'bilstm_similarity', 'cnn_similarity']
 results = {}
 pvalues = {}
 
