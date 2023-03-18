@@ -2,9 +2,6 @@ from train_models.sbert import Sentence_Bert
 from train_models.sim_lstm import Siamese_LSTM_Model
 from train_models.sim_bilstm import Siamese_BiLSTM_Model
 from train_models.sim_cnn import Siamese_CNN_Model
-from train_models.sim_bilstm_glove import Siamese_BiLSTM_glove_Model
-from train_models.sim_lstm_glove import Siamese_LSTM_glove_Model
-from train_models.sim_cnn_glove import Siamese_CNN_glove_Model
 from tqdm import tqdm
 from scipy.stats import pearsonr, spearmanr
 from gensim.models import KeyedVectors
