@@ -25,12 +25,12 @@ lstm = Siamese_LSTM_Model().eval()
 bilstm = Siamese_BiLSTM_Model().eval()
 rawcnn = Siamese_CNN_Model().eval()
 
-lstm.load_state_dict(torch.load("comparisons_test/result/lstm/model.pt", "cpu"))
-bilstm.load_state_dict(torch.load("comparisons_test/result/bilstm/model.pt", "cpu"))
-rawcnn.load_state_dict(torch.load("comparisons_test/result/cnn/model.pt", "cpu"))
+lstm.load_state_dict(torch.load("", "cpu"))
+bilstm.load_state_dict(torch.load("", "cpu"))
+rawcnn.load_state_dict(torch.load("", "cpu"))
 
 # data prepare
-data = pd.read_excel("data/final_data.xlsx", engine = "openpyxl")
+data = pd.read_excel("", engine = "openpyxl")
 
 A_codes = list(map(lambda x : ast.literal_eval(x), data['code']))
 B_codes = list(map(lambda x : ast.literal_eval(x), data['target_ipc']))
@@ -90,6 +90,6 @@ for key in comparisons:
 experiment_result = pd.DataFrame({'model' : results.keys(), 'cor' : results.values()})
 experiment_result_pvalue = pd.DataFrame({'model' : pvalues.keys(), 'cor' : pvalues.values()})
 
-data.to_excel('result.xlsx', index = False)
-experiment_result_pvalue.to_excel('result_cor_pvalue.xlsx', index = False)
-experiment_result.to_excel('result_cor.xlsx', index = False)
+data.to_excel('', index = False)
+experiment_result_pvalue.to_excel('', index = False)
+experiment_result.to_excel('', index = False)

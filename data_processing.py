@@ -4,14 +4,14 @@ import numpy as np
 from tqdm import tqdm
 
 # datas
-gsu = pd.read_excel("data/final_rating_workers_data.xlsx", sheet_name = "gsu")
-jw = pd.read_excel("data/final_rating_workers_data.xlsx", sheet_name = "jw")
-ck = pd.read_excel("data/final_rating_workers_data.xlsx", sheet_name = "ck")
+worker1 = pd.read_excel("", sheet_name = "")
+worker2 = pd.read_excel("", sheet_name = "")
+worker3 = pd.read_excel("", sheet_name = "")
 
 # calculates values
-sumr = gsu['similarity'] + jw['similarity'] + ck['similarity']
+sumr = worker1['similarity'] + worker2['similarity'] + worker3['similarity']
 average = sumr / 3
-distance = ((average - gsu['similarity']) ** 2) + ((average - jw['similarity']) ** 2) + ((average - ck['similarity']) ** 2)
+distance = ((average - worker1['similarity']) ** 2) + ((average - worker2['similarity']) ** 2) + ((average - worker3['similarity']) ** 2)
 threshold = 8
 
 expert_ratings = []
@@ -23,9 +23,9 @@ for r, a in zip(distance, average):
         expert_ratings.append(a)
 
 # eport results divide data needing expert rating & rights rating
-gsu['similarity'] = expert_ratings
+worker1['similarity'] = expert_ratings
 
-expert = gsu[gsu['similarity'] == -100]
-gsu = gsu[gsu['similarity'] != -100]
-gsu.to_excel('data/final_data.xlsx')
-expert.to_excel('data/expert_data.xlsx')
+expert = worker1[worker1['similarity'] == -100]
+worker1 = worker1[worker1['similarity'] != -100]
+worker1.to_excel('')
+expert.to_excel('')
