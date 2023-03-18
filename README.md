@@ -1,4 +1,4 @@
-# A Novel patent similarity measurement methodology
+# A-Novel-Patent-Similarity-Measurement-Methodology
 
 Document Similarity Prediction
 
